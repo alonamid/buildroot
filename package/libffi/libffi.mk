@@ -4,8 +4,11 @@
 #
 ################################################################################
 
-LIBFFI_VERSION = 3.2.1
-LIBFFI_SITE = ftp://sourceware.org/pub/libffi
+#LIBFFI_VERSION = 3.2.1
+#LIBFFI_SITE = ftp://sourceware.org/pub/libffi
+LIBFFI_VERSION = 5dcc0984cf79de3d1cd73ab18402c65f7d02c748
+LIBFFI_SITE = https://github.com/alonamid/libffi-riscv.git
+LIBFFI_SITE_METHOD = git
 LIBFFI_LICENSE = MIT
 LIBFFI_LICENSE_FILES = LICENSE
 LIBFFI_INSTALL_STAGING = YES
@@ -14,7 +17,7 @@ LIBFFI_AUTORECONF = YES
 # Move the headers to the usual location, and adjust the .pc file
 # accordingly.
 define LIBFFI_MOVE_HEADERS
-	mv $(1)/usr/lib/libffi-$(LIBFFI_VERSION)/include/*.h $(1)/usr/include/
+	mv $(1)/usr/lib/libffi-3.99999/include/*.h $(1)/usr/include/
 	$(SED) '/^includedir.*/d' -e '/^Cflags:.*/d' \
 		$(1)/usr/lib/pkgconfig/libffi.pc
 	rm -rf $(1)/usr/lib/libffi-*
@@ -28,7 +31,7 @@ HOST_LIBFFI_POST_INSTALL_HOOKS += HOST_LIBFFI_MOVE_HOST_HEADERS
 
 # Remove headers that are not at the usual location from the target
 define LIBFFI_REMOVE_TARGET_HEADERS
-	$(RM) -rf $(TARGET_DIR)/usr/lib/libffi-$(LIBFFI_VERSION)
+	$(RM) -rf $(TARGET_DIR)/usr/lib/libffi-3.99999
 endef
 
 LIBFFI_POST_INSTALL_TARGET_HOOKS += LIBFFI_REMOVE_TARGET_HEADERS
